@@ -20,3 +20,9 @@ float get_pixel(image im, int x, int y, int c) {
 
   return im.data[x + y * im.w + im.w * im.h * c];
 }
+
+void set_pixel(image im, int x, int y, int c, float v) {
+  if ((x >= 0 && x < im.w) && (y >= 0 && y < im.h) && (c >= 0 && c < im.c)) {
+    im.data[x + y * im.w + im.w * im.h * c] = v;
+  }
+}
