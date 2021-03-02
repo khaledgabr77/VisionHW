@@ -1,4 +1,5 @@
-from uwimg import *
+#!/usr/bin/python
+from Visionhw0.uwimg import *
 
 # 1. Getting and setting pixels
 im = load_image("data/dog.jpg")
@@ -30,5 +31,3 @@ shift_image(im, 1, .2)
 clamp_image(im)
 hsv_to_rgb(im)
 save_image(im, "dog_saturated")
-
-
