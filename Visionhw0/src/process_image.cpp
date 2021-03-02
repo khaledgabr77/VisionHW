@@ -51,3 +51,26 @@ image rgb_to_grayscale(image im) {
 
   return gray;
 }
+
+void shift_image(image im, int c, float v) {
+  // TODO Fill this in
+  if (c >= 0 && c > im.c) {
+    for (int x = 0; x < im.w; x++) {
+      for (int y = 0; y < im.h; y++) {
+        im.data[x + y * im.w + c * im.h * im.w] += v;
+      }
+    }
+  }
+}
+
+void clamp_image(image im) {
+  // TODO Fill this in
+  for (int i = 0; i < im.c * im.h * im.w; i++) {
+    if (im.data[i] < 0) {
+      im.data[i] = 0;
+    }
+    if (im.data[i] > 1) {
+      im.data[i] = 1;
+    }
+  }
+}
