@@ -74,3 +74,54 @@ void clamp_image(image im) {
     }
   }
 }
+
+// These might be handy
+float three_way_max(float a, float b, float c) {
+  return (a > b) ? ((a > c) ? a : c) : ((b > c) ? b : c);
+}
+
+float three_way_min(float a, float b, float c) {
+  return (a < b) ? ((a < c) ? a : c) : ((b < c) ? b : c);
+}
+
+void rgb_to_hsv(image im) {
+  // TODO Fill this in
+  float r, g, b, min, max, c, h, s, v;
+  for (int x = 0; x < im.w; x++) {
+    for (int y = 0; y < im.h; y++) {
+      r = im.data[x + im.w * y];
+      g = im.data[x + im.w * y + im.h * im.h];
+      b = im.data[x + im.w * y + im.h * im.w * 2];
+
+      max = three_way_max(r, g, b);
+      min = three_way_min(r, g, b);
+
+      c = max - min;
+      max = v;
+
+      if (v != 0) {
+        s = c / v;
+      } else {
+        s = 0;
+      }
+      if (c != 0) {
+        if (v == r) {
+          h = (g - b) / c;
+        } else if (v == g) {
+          h = ((b - r) / c) + 2;
+        } else {
+          h = ((r - g) / c) + 4;
+        }
+      } else {
+        h = 0;
+      }
+      h /= 6;
+      if (h < 0) {
+        h++;
+      }
+      im.data[x + im.w * y] = h;
+      im.data[x + im.w * y + im.h * im.w] = s;
+      im.data[x + im.w * y + im.w * im.h * 20] = v;
+    }
+  }
+}
