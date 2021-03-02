@@ -1,5 +1,6 @@
 #include "image.h"
 #include <iostream>
+#include <string.h>
 #include <string>
 
 float get_pixel(image im, int x, int y, int c) {
@@ -25,4 +26,12 @@ void set_pixel(image im, int x, int y, int c, float v) {
   if ((x >= 0 && x < im.w) && (y >= 0 && y < im.h) && (c >= 0 && c < im.c)) {
     im.data[x + y * im.w + im.w * im.h * c] = v;
   }
+}
+
+image copy_image(image im) {
+  image copy = make_image(im.w, im.h, im.c);
+  // TODO Fill this in
+  memcpy(copy.data, im.data, im.h * im.c * im.w * sizeof(float));
+
+  return copy;
 }
