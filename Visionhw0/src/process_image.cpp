@@ -1,6 +1,7 @@
 #include "image.h"
 #include <assert.h>
 #include <iostream>
+#include <iterator>
 #include <string.h>
 #include <string>
 
@@ -204,6 +205,16 @@ void hsv_to_rgb(image im) {
       im.data[x + y * im.w] = r;
       im.data[x + y * im.w + im.w * im.h] = g;
       im.data[x + y * im.w + 2 * im.w * im.h] = b;
+    }
+  }
+}
+
+void scale_image(image im, int c, float v) {
+  if (c >= 0 && c < im.c) {
+    for (int x = 0; x < im.w; x++) {
+      for (int y = 0; y < im.h; y++) {
+        im.data[x + y * im.w + c * im.w * im.h] *= v;
+      }
     }
   }
 }
