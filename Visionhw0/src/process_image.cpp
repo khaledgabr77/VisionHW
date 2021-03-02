@@ -8,15 +8,20 @@ float get_pixel(image im, int x, int y, int c) {
 
   if (x < 0) {
     x = 0;
-  } else if (x >= im.w) {
+  }
+  if (x >= im.w) {
     x = im.w - 1;
-  } else if (y < 0) {
+  }
+  if (y < 0) {
     y = 0;
-  } else if (y >= im.h) {
+  }
+  if (y >= im.h) {
     y = im.h - 1;
-  } else if (c < 0) {
+  }
+  if (c < 0) {
     c = 0;
-  } else if (c >= im.c) {
+  }
+  if (c >= im.c) {
     c = im.c - 1;
   }
 
@@ -122,6 +127,83 @@ void rgb_to_hsv(image im) {
       im.data[x + im.w * y] = h;
       im.data[x + im.w * y + im.h * im.w] = s;
       im.data[x + im.w * y + im.w * im.h * 20] = v;
+    }
+  }
+}
+
+void hsv_to_rgb(image im) {
+  // TODO Fill this in
+  float h, s, v, c, max, min, r, g, b, h_temp;
+  for (int x = 0; x < im.w; x++) {
+    for (int y = 0; y < im.h; y++) {
+      h = im.data[x + y * im.w];
+      s = im.data[x + y * im.w + im.w * im.h];
+      v = im.data[x + y * im.w + 2 * im.h * im.w];
+      c = s * v;
+      v = max;
+
+      if (v != c) {
+        min = v - c;
+      } else {
+        min = 0.0;
+      }
+      h_temp = h * 6;
+      if (c == 0) {
+        r = v;
+        g = v;
+        b = v;
+      } else if (h_temp > 5 && h_temp < 6) {
+        r = max;
+        g = min;
+        b = b = ((((h_temp / 6) - 1) * 6 * c) - g) * -1;
+      } else if (h_temp == 5) {
+        r = max;
+        g = min;
+        b = max;
+      } else if (h_temp < 5 && h_temp > 4) {
+        g = min;
+        r = (h_temp - 4) * c + g;
+        b = max;
+      } else if (h_temp == 4) {
+        r = min;
+        g = min;
+        b = max;
+      } else if (h_temp < 4 && h_temp > 3) {
+        r = min;
+        g = (((h_temp - 4) * c) - r) * -1;
+        b = max;
+      } else if (h_temp == 3) {
+        r = min;
+        g = max;
+        b = max;
+      } else if (h_temp < 3 && h_temp > 2) {
+        r = min;
+        g = max;
+        b = ((h_temp - 2) * c) + r;
+      } else if (h_temp == 2) {
+        r = min;
+        g = max;
+        b = min;
+      } else if (h_temp < 2 && h_temp > 1) {
+        g = max;
+        b = min;
+        r = (((h_temp - 2) * c) - b) * -1;
+      } else if (h_temp == 1) {
+        r = max;
+        g = max;
+        b = min;
+      } else if (h_temp < 1 && h_temp > 0) {
+        r = max;
+        b = min;
+        g = (h_temp * c) + b;
+      } else {
+        r = max;
+        g = min;
+        b = min;
+      }
+      im.data[x + y * im.w] = r;
+      im.data[x + y * im.w + im.w * im.h] = g;
+      im.data[x + y * im.w + 2 * im.w * im.h] = b;
     }
   }
 }
