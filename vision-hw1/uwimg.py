@@ -159,5 +159,8 @@ convolve_image.restype = IMAGE
 
 
 if __name__ == "__main__":
-    im = load_image("data/dog.jpg")
-    save_image(im, "hey")
+    #im = load_image("data/dog.jpg")
+    #save_image(im, "hey1")
+    im = load_image("data/dogsmall.jpg")
+    a = nn_resize(im, im.w*4, im.h*4)
+    save_image(a, "dog4x-nn")
